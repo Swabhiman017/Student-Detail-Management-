@@ -1,0 +1,330 @@
+   
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<unistd.h>
+struct student{
+    int roll;
+    char* name;
+    int per;
+    
+    struct student* next;
+    };
+
+// Function for showing details about students
+//it will print student list
+void show_list(struct student* head);
+
+//insertion at the end 
+void add_students(struct student* head);
+
+//Function for searching  by roll No.
+void roll_search(struct student* head);
+
+//FUNCTION FOR SEARCHING STUDENT BY NAME
+void name_search(struct student* head);
+
+//FUNCTION FOR DELETION OF STUDENT DETAIL BY Roll No. OF THE STUDENT
+void roll_delete_details(struct student* head);
+//FUNCTION FOR DELETION OF STUDENT DETAIL BY NAME OF THE STUDENT
+void name_delete_details(struct student* head);
+
+// MAIN FUNCTION STARTS
+
+ int main()
+{
+   int choice;
+    struct student *head,*temp,*temp1,*temp2,*temp3,*temp4;
+
+    
+   temp=(struct student*)malloc (sizeof(struct student));
+    
+     temp1=(struct student*)malloc (sizeof(struct student));
+    
+    temp2=(struct student*)malloc (sizeof(struct student));
+      
+    temp3=(struct student*)malloc (sizeof(struct student));
+    
+    temp4=(struct student*)malloc (sizeof(struct student));
+    
+    //creating list
+    temp->roll=1;
+    temp->name="Ram";
+    temp->per=82;
+    temp->next=temp1;
+    
+    temp1->roll=2;
+    temp1->name="Gita";
+    temp1->per=90;
+    temp1->next=temp2;
+                  
+    temp2->roll=3;
+    temp2->name="Sohan";
+    temp2->per=78;
+    temp2->next=temp3;
+    
+    temp3->roll=4;
+    temp3->name="Sita";
+    temp3->per=85;
+    temp3->next=temp4;
+        
+    temp4->roll=5;
+    temp4->name="Ashish";
+    temp4->per=82;
+    temp4->next=NULL;
+    
+    head=temp;
+    while(1)
+    {
+        sleep(1);
+     printf("\n\n-----SIMPLE LINKED LIST OPERATIONS:-----");
+     printf("\n\n MENU ");
+     printf("--------------------------------------\n");
+         
+     printf(" 1.Display Student List \n"); 
+        
+     printf(" 2.Search Student Details By Roll No. \n");
+        
+     printf(" 3.Search Student Details By Name\n"); 
+        
+     printf(" 4.Insert A New Student At The End \n");
+        
+     printf(" 5.Delete Student Detail By Roll No. \n");
+        
+     printf(" 6.Delete Student Detail By Name Of Student \n");                 
+     printf(" 9.Exit \n");
+   
+printf("--------------------------------------\n");          printf("--------------------------------------\n");
+     printf("Enter your choice:"); scanf("%d",&choice);
+     switch(choice) 
+        {
+         case 1:
+          show_list(head); //at line 147
+                   
+          break; 
+        case 2: 
+         roll_search(head);//at line 205
+         break;
+           
+        case 3:
+         name_search(head);//at line 231             
+         break; 
+         
+        case 4:
+         add_students(head);//at line 166       
+         break; 
+         
+        case 5:
+         roll_delete_details(head);//at line 261       
+         break; 
+        
+        case 6:
+         name_delete_details(head);//at line 299       
+         break;                
+                                
+        case 9:
+         exit(0);
+         break;
+         
+        default:
+         printf("\n Wrong Choice:\n");
+         break; 
+        }//end of switch()
+         }//end of while loop    
+                                   
+    return 0;
+}//end of main
+
+/*FUNCTION DEFINITIONS */
+
+//FUNCTION TO DISPLAY DETAILS OF STUDENT
+void show_list(struct student* head)
+{
+    struct student *ptr;
+  printf("\n~~~~~~~DATA IN LIST:~~~~~~~\n");
+    
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        
+    printf("\nRoll No.=%d\n",ptr->roll);  
+    printf("Name =%s",ptr->name);             
+    printf("\nPercentage=%d\n",ptr->per);  
+    ptr=ptr->next;  
+    }
+    printf("\n\t~~~~~~~~~~~~~~~~~~~~\n");
+    sleep(3);
+}
+
+//FUNCTION TO ADD NEW STUDENT DETAIL IN LIST
+void add_students(struct student* head)
+{    
+    int xroll,xper;
+    char* xname;    
+    struct student *NEW,*AVAIL;
+    printf("\n Enter student Details");
+    printf("\nEnter roll No. :");
+    scanf("%d",&xroll);
+    
+    printf("\nEnter Name :");
+    scanf("%s",xname);
+    
+    fflush(stdin);//for removing extra spaces 
+    
+    
+    printf("\nEnter Percentage :");
+    scanf("%d",&xper);
+        
+    AVAIL=(struct student*)malloc (sizeof(struct student));
+    
+    NEW=head;
+    AVAIL->roll=xroll;
+    AVAIL->name=xname;
+    AVAIL->per=xper;
+    
+   while(NEW->next!=NULL)
+    {
+        NEW=NEW->next;
+    }
+    
+    NEW->next=AVAIL;
+    AVAIL->next=NULL; 
+    
+    //show_list(head);
+    printf("\n ---Added Successfully--- \n");
+    sleep(3);
+}
+
+//FUNCTION FOR SEARCHING BY ROLL NUMBER
+void roll_search(struct student* head)
+{
+    int xroll;
+    printf("\t Enter roll No. to search :");
+    scanf("%d",&xroll);
+    struct student *NEW;
+    NEW=head;
+    while(NEW!=NULL)
+    {
+        if(NEW->roll==xroll)
+        {
+            sleep(1);
+            printf("\n\t~~~~~You are searching for :~~~~~~\n");
+          printf("\nRoll No.=%d",xroll);
+          printf("\nName =%s",NEW->name);
+          printf("\nPercantage=%d",NEW->per); 
+printf("\n\t~~~~~~~~~~~~~~~\n");                        
+            break;            
+        }
+        else
+        NEW=NEW->next;
+    }
+    sleep(3);
+}
+
+//FUNCTION TO SEARCH DETAIL BY NAME OF THE STUDENTS
+void name_search(struct student* head)
+{
+    char xname[128];
+    printf("\t Enter Name to search :");
+    scanf("%s",xname);
+    struct student *NEW;
+    NEW=head;
+    while(NEW!=NULL)
+    {
+        if(strcmp(NEW->name,xname)==0)
+        {
+            sleep(1);
+            printf("\n\t~~~~~You are searching for :~~~~~~\n");
+          
+          printf("\nName =%s",xname);
+            
+         printf("\nRoll No.=%d",NEW->roll);
+         printf("\nPercentage=%d\n",NEW->per); 
+printf("\n\t~~~~~~~~~~~~~\n");           
+         break;
+            
+        }
+        else
+        NEW=NEW->next;
+    }
+    sleep(3);
+    
+}
+//FUNCTION FOR DELETION
+void roll_delete_details(struct student* head)
+{
+    int roll;
+    printf("\nEnter roll no. :");
+    scanf("%d",&roll);
+    struct student *LOC,*LOCP;
+    
+    LOCP=head;
+    LOC=head->next;
+    if(roll==LOCP->roll)
+    {
+        struct student *ptr=head;
+        head=head->next;
+        free (ptr);
+    }
+    else{
+   while(LOC->roll!=roll&&LOC->next!=NULL)
+    {
+    LOCP=LOCP->next;  
+    LOC=LOC->next;      
+        
+    }
+    if(LOC->roll==roll)
+    {
+    LOCP->next=LOC->next; 
+               
+    free(LOC);
+        }
+   }
+   sleep(1);
+   printf("\n\tDELETED SUCCESSFULLY\n");
+   sleep(2);
+    
+   printf("\n---------List After Deletion---------\n");
+    sleep(1);
+   show_list(head);
+}
+         
+//FUNCTION FOR DELETION OF STUDENT DETAIL BY NAME OF THE STUDENT
+void name_delete_details(struct student* head)
+{
+    char name[128];
+    printf("\nEnter name :");
+    scanf("%s",name);
+    fflush(stdin);
+    struct student *LOC,*LOCP;
+    
+    LOCP=head;
+    LOC=head->next;
+    if(strcmp(name,LOCP->name)==0)
+    {
+        struct student *ptr=head;
+        head=head->next;
+        free (ptr);
+    }
+    else{
+   while(strcmp(LOC->name,name)!=0&&LOC->next!=NULL)
+    {
+    LOCP=LOCP->next;  
+    LOC=LOC->next;      
+        
+    }
+    if(strcmp(LOC->name,name)==0)
+    {
+    LOCP->next=LOC->next; 
+               
+    free(LOC);
+        }
+   }
+   sleep(1);
+   printf("\n\tDELETED SUCCESSFULLY\n");
+   sleep(2);
+   printf("\n---------List After Deletion---------\n");
+    sleep(1);
+   show_list(head);
+}
